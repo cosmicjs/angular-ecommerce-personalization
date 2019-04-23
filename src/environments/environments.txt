@@ -1,0 +1,9 @@
+export const environment = {
+  production: true,
+  read_key: 'z0qJFozXYkcrn0nsThQRVzahgJNUxNTU4VW0KYQboLXGOdwkcJ',
+  write_key: 'rYiOsUCrjfWZzYWKiv1wB6GczBIRXLDbg7QhPJgRIszNTBWlZV',
+  bucket_slug: 'plr',
+  URL: 'https://api.cosmicjs.com/v1/',
+  presets: 'main-presets',
+  gcp_send_mail: 'https://europe-west1-textual-studio.cloudfunctions.net/send-mail-v2'
+};
