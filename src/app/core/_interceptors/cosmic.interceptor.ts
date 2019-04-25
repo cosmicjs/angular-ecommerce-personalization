@@ -10,12 +10,18 @@ export class CosmicInterceptor implements HttpInterceptor {
       let params = new HttpParams({ fromString: req.params.toString() });
       if (req.method === 'GET') {
         params = params.append('read_key', environment.read_key);
+
+        req = req.clone({
+          params: params
+        });
       } else {
-        params = params.append('write_key', environment.write_key);
+        let payload = JSON.parse(req.body);
+        payload.write_key = environment.write_key;
+
+        req = req.clone({
+          body: payload
+        });
       }
-      req = req.clone({
-        params: params
-      });
     }
     return next.handle(req);
   }

@@ -18,6 +18,7 @@ export class CosmicService {
   constructor(private http: HttpClient) {}
 
   private commonPath = environment.URL + environment.bucket_slug;
+  private addObjectPath = this.commonPath + '/add-object';
   private objectTypePath = this.commonPath + '/object-type';
 
   private singleObjectUrl = this.commonPath + '/object';
@@ -30,7 +31,6 @@ export class CosmicService {
   private categories$: Observable<Category[]>;
   private category$ = new Map<string, Observable<Category>>();
   private users$: Observable<User[]>;
-  private user$ = new Map<string, Observable<User>>();
   private products$: Observable<Product[]>;
   private product$ = new Map<string, Observable<Product>>();
 
@@ -79,24 +79,23 @@ export class CosmicService {
   }
 
   getUser(id: string): Observable<User> {
-    if (!this.user$.get(id)) {
-      const url = `${this.singleObjectByIdUrl}/${id}`;
-      const response = this.http.get<User>(url).pipe(
-        tap(_ => console.log(`fetched user: ${id}`)),
-        map(_ => {
-          return new User(_['object']);
-        }),
-        shareReplay(1),
-        catchError(this.handleError<User>(`getUser: ${id}`))
-      );
-      this.user$.set(id, response);
-    }
-    return this.user$.get(id);
+    const url = `${this.singleObjectByIdUrl}/${id}`;
+    return this.http.get<User>(url).pipe(
+      tap(_ => console.log(`fetched user: ${id}`)),
+      map(_ => {
+        return new User(_['object']);
+      }),
+      catchError(this.handleError<User>(`getUser: ${id}`))
+    );
+  }
+
+  setUser(user: User) {
+    return this.http.post<User>(this.addObjectPath, JSON.stringify(user.payload())).pipe(catchError(this.handleError<User>()));
   }
 
   getProducts(): Observable<Product[]> {
     if (!this.products$) {
-      this.products$ = this.http.get<Product[]>(this.productsUrl).pipe(
+      this.products$ = this.http.get<Product[]>(this.productsUrl + '?sort=random').pipe(
         tap(_ => console.log('fetched products')),
         map(_ => {
           return _['objects'].map(element => new Product(element));
@@ -109,7 +108,7 @@ export class CosmicService {
   }
 
   getProduct(id: string): Observable<Product> {
-    if (!this.user$.get(id)) {
+    if (!this.product$.get(id)) {
       const url = `${this.singleObjectByIdUrl}/${id}`;
       const response = this.http.get<Product>(url).pipe(
         tap(_ => console.log(`fetched product: ${id}`)),

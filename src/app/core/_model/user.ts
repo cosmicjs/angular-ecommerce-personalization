@@ -1,13 +1,28 @@
 export class User {
   _id: string;
-  slug: string;
   sessionid: string;
-  interests: any;
+  interests: JSON;
 
-  constructor(obj) {
-    this._id = obj._id;
-    this.slug = obj.slug;
-    this.sessionid = obj.sessionid;
-    this.interests = obj.metadata.interests;
+  constructor(obj?) {
+    this._id = obj ? obj._id : '';
+    this.sessionid = obj ? obj.metadata.sessionid : '';
+    this.interests = obj ? obj.metadata.interests : '';
+  }
+
+  payload() {
+    return {
+      title: 'some user',
+      type_slug: 'users',
+      metafields: [
+        {
+          key: 'sessionid',
+          value: this.sessionid
+        },
+        {
+          key: 'interests',
+          value: this.interests
+        }
+      ]
+    };
   }
 }
