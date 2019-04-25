@@ -1,0 +1,12 @@
+<div class="columns">
+  <ng-container *ngFor="let product of productList">
+          <div class="product-tile column is-one-third">
+            <img src="{{ product.image }}" class="image"/>
+            <div class="level">
+                <span class="level-item">{{product.title}}</span>
+                <span class="level-item">${{product.price}}</span>
+            </div>
+            <app-actions [product]="product"></app-actions>
+          </div>
+  </ng-container>
+</div>

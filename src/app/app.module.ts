@@ -3,16 +3,21 @@ import { NgModule } from '@angular/core';
 
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
+import { CoreModule } from './core/core.module';
+import { HTTP_INTERCEPTORS, HttpClientModule } from '@angular/common/http';
+import { CosmicInterceptor } from './core/_interceptors/cosmic.interceptor';
+import { ProductListingModule } from './product-listing/product-listing.module';
 
 @NgModule({
-  declarations: [
-    AppComponent
+  declarations: [AppComponent],
+  imports: [BrowserModule, AppRoutingModule, CoreModule, HttpClientModule, ProductListingModule],
+  providers: [
+    {
+      provide: HTTP_INTERCEPTORS,
+      useClass: CosmicInterceptor,
+      multi: true
+    }
   ],
-  imports: [
-    BrowserModule,
-    AppRoutingModule
-  ],
-  providers: [],
   bootstrap: [AppComponent]
 })
-export class AppModule { }
+export class AppModule {}

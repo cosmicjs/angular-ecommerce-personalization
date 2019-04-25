@@ -1,9 +1,11 @@
+import { Category } from './category';
+
 export class Product {
   _id: string;
   slug: string;
   title: string;
   price: string;
-  categories: string[];
+  categories: Category[];
   image: string;
 
   constructor(obj) {
@@ -11,7 +13,11 @@ export class Product {
     this.slug = obj.slug;
     this.title = obj.title;
     this.price = obj.metadata.price;
-    this.categories = obj.metadata.categories;
     this.image = obj.metadata.image.url;
+    this.categories = [];
+
+    if (obj.metadata && obj.metadata.categories) {
+      obj.metadata.categories.map(category => this.categories.push(new Category(category)));
+    }
   }
 }
