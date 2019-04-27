@@ -90,7 +90,12 @@ export class CosmicService {
   }
 
   setUser(user: User) {
-    return this.http.post<User>(this.addObjectPath, JSON.stringify(user.payload())).pipe(catchError(this.handleError<User>()));
+    return this.http.post<User>(this.addObjectPath, JSON.stringify(user.payload())).pipe(
+      map(_ => {
+        return new User(_['object']);
+      }),
+      catchError(this.handleError<User>())
+    );
   }
 
   getProducts(): Observable<Product[]> {

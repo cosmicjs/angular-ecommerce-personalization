@@ -6,7 +6,7 @@ export class User {
   constructor(obj?) {
     this._id = obj ? obj._id : '';
     this.sessionid = obj ? obj.metadata.sessionid : '';
-    this.interests = obj ? obj.metadata.interests : '';
+    this.interests = obj ? obj.metadata.interests : {};
   }
 
   payload() {
@@ -24,5 +24,13 @@ export class User {
         }
       ]
     };
+  }
+
+  increaseInterest(category, weight) {
+    if (!this.interests[category._id]) {
+      this.interests[category._id] = weight;
+    } else {
+      this.interests[category._id] += weight;
+    }
   }
 }

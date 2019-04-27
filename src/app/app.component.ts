@@ -29,7 +29,9 @@ export class AppComponent implements OnInit {
       localStorage.setItem('sessionID', sessionID);
       user.sessionid = sessionID;
 
-      this.cosmicService.setUser(user).subscribe();
+      this.cosmicService.setUser(user).subscribe(user => {
+        sessionStorage.setItem('user', JSON.stringify(user));
+      });
     }
   }
 }
