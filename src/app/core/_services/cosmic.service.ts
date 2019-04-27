@@ -4,9 +4,9 @@ import { Observable, of } from 'rxjs';
 import { catchError, map, tap, shareReplay } from 'rxjs/operators';
 
 import { environment } from '@environments/environment';
-import { Product } from '../_model/product';
-import { User } from '../_model/user';
-import { Category } from '../_model/category';
+import { Category } from '@models/category';
+import { User } from '@models/user';
+import { Product } from '@models/product';
 
 /**
  * A service to get data from CosmicJS.

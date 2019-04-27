@@ -1,3 +1,5 @@
+import { Category } from './category';
+
 export class User {
   _id: string;
   sessionid: string;
@@ -26,7 +28,7 @@ export class User {
     };
   }
 
-  increaseInterest(category, weight) {
+  increaseInterest(category: Category, weight: number) {
     if (!this.interests[category._id]) {
       this.interests[category._id] = weight;
     } else {

@@ -1,7 +1,7 @@
 import { Component, OnInit, Input } from '@angular/core';
-import { Product } from 'src/app/core/_model/product';
-import { User } from 'src/app/core/_model/user';
-import { Category } from 'src/app/core/_model/category';
+import { Product } from 'src/models/product';
+import { User } from '@models/user';
+import { Category } from '@models/category';
 
 @Component({
   selector: 'app-actions',

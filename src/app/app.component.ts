@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { CosmicService } from './core/_services/cosmic.service';
-import { User } from './core/_model/user';
+import { User } from '@models/user';
 
 @Component({
   selector: 'app-root',

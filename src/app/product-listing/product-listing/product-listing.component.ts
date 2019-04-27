@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { CosmicService } from 'src/app/core/_services/cosmic.service';
-import { Product } from 'src/app/core/_model/product';
+import { Product } from '@models/product';
 
 @Component({
   selector: 'app-product-listing',
