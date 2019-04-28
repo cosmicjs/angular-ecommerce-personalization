@@ -2,6 +2,7 @@ import { Component, OnInit, Input } from '@angular/core';
 import { Product } from 'src/models/product';
 import { User } from '@models/user';
 import { Category } from '@models/category';
+import { UserService } from 'src/app/core/_services/user.service';
 
 @Component({
   selector: 'app-actions',
@@ -9,10 +10,9 @@ import { Category } from '@models/category';
   styleUrls: ['./actions.component.scss']
 })
 export class ActionsComponent implements OnInit {
-  constructor() {}
+  constructor(private userService: UserService) {}
 
   @Input() product: Product;
-  private user: User = Object.assign(new User(), JSON.parse(sessionStorage.getItem('user')));
 
   ngOnInit() {}
 
@@ -29,9 +29,11 @@ export class ActionsComponent implements OnInit {
   }
 
   increaseInterest(weight: number) {
+    const user: User = this.userService.getSessionUser();
     this.product.categories.forEach((category: Category) => {
-      this.user.increaseInterest(category, weight);
+      user.increaseInterest(category, weight);
     }, this);
-    sessionStorage.setItem('user', JSON.stringify(this.user));
+
+    this.userService.setSessionUser(user);
   }
 }

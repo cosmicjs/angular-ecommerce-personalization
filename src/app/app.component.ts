@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
-import { CosmicService } from './core/_services/cosmic.service';
 import { User } from '@models/user';
+import { UserService } from './core/_services/user.service';
 
 @Component({
   selector: 'app-root',
@@ -10,28 +10,9 @@ import { User } from '@models/user';
 export class AppComponent implements OnInit {
   title = 'Cosmic-Customization Commerce';
 
-  constructor(private cosmicService: CosmicService) {}
+  constructor(private userService: UserService) {}
 
   ngOnInit() {
-    this.setSessionID();
-  }
-
-  setSessionID() {
-    let sessionID = localStorage.getItem('sessionID');
-
-    if (!localStorage.getItem('sessionID')) {
-      const user = new User();
-
-      sessionID = Math.random()
-        .toString(36)
-        .substr(2, 9);
-
-      localStorage.setItem('sessionID', sessionID);
-      user.sessionid = sessionID;
-
-      this.cosmicService.setUser(user).subscribe(user => {
-        sessionStorage.setItem('user', JSON.stringify(user));
-      });
-    }
+    this.userService.setSessionID();
   }
 }

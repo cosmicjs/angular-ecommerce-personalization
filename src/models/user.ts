@@ -29,10 +29,10 @@ export class User {
   }
 
   increaseInterest(category: Category, weight: number) {
-    if (!this.interests[category._id]) {
-      this.interests[category._id] = weight;
+    if (!this.interests[category.title]) {
+      this.interests[category.title] = weight;
     } else {
-      this.interests[category._id] += weight;
+      this.interests[category.title] += weight;
     }
   }
 }
