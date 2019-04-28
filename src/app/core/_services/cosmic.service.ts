@@ -19,78 +19,38 @@ export class CosmicService {
 
   private commonPath = environment.URL + environment.bucket_slug;
   private addObjectPath = this.commonPath + '/add-object';
+  private editObjectPath = this.commonPath + '/edit-object';
   private objectTypePath = this.commonPath + '/object-type';
 
   private singleObjectUrl = this.commonPath + '/object';
   private singleObjectByIdUrl = this.commonPath + '/object-by-id';
 
-  private categoriesUrl = this.objectTypePath + '/categories';
-  private usersUrl = this.objectTypePath + '/users';
   private productsUrl = this.objectTypePath + '/products';
 
-  private categories$: Observable<Category[]>;
-  private category$ = new Map<string, Observable<Category>>();
-  private users$: Observable<User[]>;
   private products$: Observable<Product[]>;
-  private product$ = new Map<string, Observable<Product>>();
 
-  getCategories(): Observable<Category[]> {
-    if (!this.categories$) {
-      this.categories$ = this.http.get<Category[]>(this.categoriesUrl).pipe(
-        tap(_ => console.log('fetched categories')),
-        map(_ => {
-          return _['objects'].map(element => new Category(element));
-        }),
-        shareReplay(1),
-        catchError(this.handleError('getCategories', []))
-      );
-    }
-    return this.categories$;
-  }
-
-  getCategory(id: string): Observable<Category> {
-    if (!this.category$.get(id)) {
-      const url = `${this.singleObjectByIdUrl}/${id}`;
-      const response = this.http.get<Category>(url).pipe(
-        tap(_ => console.log(`fetched category: ${id}`)),
-        map(_ => {
-          return new Category(_['object']);
-        }),
-        shareReplay(1),
-        catchError(this.handleError<Category>(`getCategory: ${id}`))
-      );
-      this.category$.set(id, response);
-    }
-    return this.category$.get(id);
-  }
-
-  getUsers(): Observable<User[]> {
-    if (!this.users$) {
-      this.users$ = this.http.get<User[]>(this.usersUrl).pipe(
-        tap(_ => console.log('fetched users')),
-        map(_ => {
-          return _['objects'].map(element => new User(element));
-        }),
-        shareReplay(1),
-        catchError(this.handleError('getUsers', []))
-      );
-    }
-    return this.users$;
-  }
-
-  getUser(id: string): Observable<User> {
-    const url = `${this.singleObjectByIdUrl}/${id}`;
+  getUser(slug: string): Observable<User> {
+    const url = `${this.singleObjectUrl}/${slug}`;
     return this.http.get<User>(url).pipe(
-      tap(_ => console.log(`fetched user: ${id}`)),
+      tap(_ => console.log(`fetched user: ${slug}`)),
       map(_ => {
         return new User(_['object']);
       }),
-      catchError(this.handleError<User>(`getUser: ${id}`))
+      catchError(this.handleError<User>(`getUser: ${slug}`))
+    );
+  }
+
+  updateUser(user: User) {
+    return this.http.put<User>(this.editObjectPath, JSON.stringify(user.putBody())).pipe(
+      map(_ => {
+        return new User(_['object']);
+      }),
+      catchError(this.handleError<User>())
     );
   }
 
   setUser(user: User) {
-    return this.http.post<User>(this.addObjectPath, JSON.stringify(user.payload())).pipe(
+    return this.http.post<User>(this.addObjectPath, JSON.stringify(user.postBody())).pipe(
       map(_ => {
         return new User(_['object']);
       }),
@@ -110,22 +70,6 @@ export class CosmicService {
       );
     }
     return this.products$;
-  }
-
-  getProduct(id: string): Observable<Product> {
-    if (!this.product$.get(id)) {
-      const url = `${this.singleObjectByIdUrl}/${id}`;
-      const response = this.http.get<Product>(url).pipe(
-        tap(_ => console.log(`fetched product: ${id}`)),
-        map(_ => {
-          return new Product(_['object']);
-        }),
-        shareReplay(1),
-        catchError(this.handleError<Product>(`getProduct: ${id}`))
-      );
-      this.product$.set(id, response);
-    }
-    return this.product$.get(id);
   }
 
   /**

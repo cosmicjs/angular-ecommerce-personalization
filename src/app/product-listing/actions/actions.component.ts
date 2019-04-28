@@ -3,6 +3,7 @@ import { Product } from 'src/models/product';
 import { User } from '@models/user';
 import { Category } from '@models/category';
 import { UserService } from 'src/app/core/_services/user.service';
+import { CosmicService } from 'src/app/core/_services/cosmic.service';
 
 @Component({
   selector: 'app-actions',
@@ -10,7 +11,7 @@ import { UserService } from 'src/app/core/_services/user.service';
   styleUrls: ['./actions.component.scss']
 })
 export class ActionsComponent implements OnInit {
-  constructor(private userService: UserService) {}
+  constructor(private userService: UserService, private cosmicService: CosmicService) {}
 
   @Input() product: Product;
 
@@ -35,5 +36,6 @@ export class ActionsComponent implements OnInit {
     }, this);
 
     this.userService.setSessionUser(user);
+    this.cosmicService.updateUser(user).subscribe();
   }
 }

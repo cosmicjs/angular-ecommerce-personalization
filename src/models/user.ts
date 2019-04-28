@@ -2,27 +2,36 @@ import { Category } from './category';
 
 export class User {
   _id: string;
-  sessionid: string;
+  slug: string;
   interests: JSON;
 
   constructor(obj?) {
     this._id = obj ? obj._id : '';
-    this.sessionid = obj ? obj.metadata.sessionid : '';
-    this.interests = obj ? obj.metadata.interests : {};
+    this.slug = obj ? obj.slug : '';
+    this.interests = obj ? JSON.parse(obj.metadata.interests) : {};
   }
 
-  payload() {
+  postBody() {
     return {
-      title: 'some user',
+      title: this.slug,
       type_slug: 'users',
       metafields: [
         {
-          key: 'sessionid',
-          value: this.sessionid
-        },
+          key: 'interests',
+          value: JSON.stringify(this.interests)
+        }
+      ]
+    };
+  }
+
+  putBody() {
+    return {
+      title: this.slug,
+      slug: this.slug,
+      metafields: [
         {
           key: 'interests',
-          value: this.interests
+          value: JSON.stringify(this.interests)
         }
       ]
     };

@@ -12,10 +12,10 @@ export class UserService {
 
   constructor(private cosmicService: CosmicService) {}
 
-  setSessionID() {
+  init() {
     let sessionID = localStorage.getItem('sessionID');
 
-    if (!localStorage.getItem('sessionID')) {
+    if (!sessionID) {
       const user = new User();
 
       sessionID = Math.random()
@@ -23,11 +23,13 @@ export class UserService {
         .substr(2, 9);
 
       localStorage.setItem('sessionID', sessionID);
-      user.sessionid = sessionID;
+      user.slug = sessionID;
 
       this.cosmicService.setUser(user).subscribe(user => {
         this.setSessionUser(user);
       });
+    } else if (!sessionStorage.getItem('user')) {
+      this.cosmicService.getUser(sessionID).subscribe(user => this.setSessionUser(user));
     }
   }
 
@@ -41,6 +43,8 @@ export class UserService {
 
     if (user) {
       return Object.assign(new User(), JSON.parse(user));
+    } else {
+      return null;
     }
   }
 }
