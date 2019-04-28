@@ -1,11 +1,15 @@
 import { Injectable } from '@angular/core';
 import { User } from '@models/user';
 import { CosmicService } from './cosmic.service';
+import { BehaviorSubject } from 'rxjs';
 
 @Injectable({
   providedIn: 'root'
 })
 export class UserService {
+  private userSource = new BehaviorSubject<User>(new User());
+  public user$ = this.userSource.asObservable();
+
   constructor(private cosmicService: CosmicService) {}
 
   setSessionID() {
@@ -29,9 +33,8 @@ export class UserService {
 
   setSessionUser(user: User) {
     sessionStorage.setItem('user', JSON.stringify(user));
+    this.userSource.next(user);
   }
-
-  updateSessionUser(user: User) {}
 
   getSessionUser(): User {
     const user = sessionStorage.getItem('user');

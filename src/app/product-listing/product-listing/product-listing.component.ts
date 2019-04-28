@@ -16,7 +16,9 @@ export class ProductListingComponent implements OnInit {
   constructor(private cosmicService: CosmicService, private userService: UserService) {}
 
   ngOnInit() {
-    this.user = this.userService.getSessionUser();
+    this.userService.user$.subscribe(user => {
+      this.user = user;
+    });
     this.cosmicService.getProducts().subscribe(products => (this.productList = products));
   }
 }
