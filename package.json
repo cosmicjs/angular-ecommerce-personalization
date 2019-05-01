@@ -24,7 +24,7 @@
   },
   "private": true,
   "dependencies": {
-    "@angular/animations": "~7.2.0",
+    "@angular/animations": "^7.2.14",
     "@angular/common": "~7.2.0",
     "@angular/compiler": "~7.2.0",
     "@angular/core": "~7.2.0",
@@ -36,6 +36,7 @@
     "core-js": "^2.5.4",
     "express": "^4.16.4",
     "font-awesome": "^4.7.0",
+    "ngx-toastr": "^10.0.2",
     "prettier": "^1.17.0",
     "rxjs": "~6.3.3",
     "tslib": "^1.9.0",
