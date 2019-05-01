@@ -1,6 +1,6 @@
 # Cosmic Customization Website
 
-![Angular Company Website](https://cosmic-s3.imgix.net/6bdb6590-ffc9-11e8-9a9c-8b349df2e2bf-smartmockups_jpoc1svl.jpg?w=1200)
+![Cosmic Customization Website](https://cosmic-s3.imgix.net/bef19600-6ad6-11e9-85d0-9fa707d6dd21-Screenshot-2019-04-30-at-01.24.05.png?w=1000)
 ### [View Demo](https://cosmicjs.com/apps/xxxx)
 
 This repository showcases the use of Angular with [Cosmic JS](cosmicjs.com), a headless CMS service, to create a ecommerce website customization sample.
