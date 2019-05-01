@@ -32,3 +32,4 @@ fs.readFile(targetPath, 'utf8', function(readError, data) {
       return console.log(writeError);
     }
   });
+});
