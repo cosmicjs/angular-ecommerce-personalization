@@ -11,7 +11,7 @@ https://cosmicjs.com/apps/product-listings-app-with-personalization
 
 2. Install the code locally:
 ```
-git clone https://github.com/imaka/Cosmic-Customization
+git clone https://github.com/cosmicjs/angular-ecommerce-personalization
 ```
 
 3. Once you've got your Cosmic JS Bucket installed, fill the data on the `environment` files as follows:
