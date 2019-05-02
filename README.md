@@ -7,7 +7,7 @@ This repository showcases the use of Angular with [Cosmic JS](https://cosmicjs.c
 
 ## How to install
 1. Install demo content via the Cosmic JS website:
-https://cosmicjs.com/apps/product-listings-app-with-personalization
+https://cosmicjs.com/apps/ecommerce-personalization
 
 2. Install the code locally:
 ```
